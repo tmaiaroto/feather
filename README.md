@@ -77,15 +77,19 @@ this framework provides. You're also free to use it if you want to set cookies. 
 
 ## Installing & Building
 
-I wouldn't build it. But you can, I've setup Grunt. You'll always find the fully built and minified project under the 
-```dist``` directory. Just use that. Bower is here too so it's easy to install and include on your page.
+I've setup Grunt. You'll always find the fully built and minified project under the ```dist``` directory. Building isn't completely
+straight forward, but it isn't too bad. The thing is the order in which CSS is being combined and the fact that some projects
+are using Sass while others are using LESS. Also, not everythign can come in via NPM.
 
-If you do want to build it with some other LESS or Sass to combine everything into a single file for your project, that's 
-fine too. You can just check out the Grunt file. It should be relatively straight forward. Just keep in mind parts borrowed
-were written in a mix of LESS and Sass.
+So, you'll want to basically get all the submodules, install the packages that are coming in via NPM and then use Grunt. 
+To pop open a dev build in a browser do the following:
+
+```git submodule update --init```    
+```npm install```    
+```grunt dev```
+
+Then ```grunt build``` to build. **NOTE: This is still a work in progress.**
 
 ## Making Kits (or themes)
 
-I made a Grunt task to help you with this process. There's a dev site that I use for the development of the framework, but 
-it also makes for a really great way to create themes. You need not create an actual project in order to make a theme. 
-You can simply see all components without writing any HTML or anything.
+I will make a Grunt task to help you with this process.
