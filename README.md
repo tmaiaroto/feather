@@ -10,6 +10,15 @@ So many rely on jQuery and if you're going to use jQuery anyway, then that's not
 Feather aims to be lightweight and beautiful. It isn't overly opinionated and so it doesn't come with quite as many 
 components, but there's still enough to be a solid foundation for any project.
 
+How small? Well, it's not done yet so it'll get larger. However, for now the CSS is about 47kb minified. Compare that
+with Kube's (the primary framework Feather draws from) 60kb.
+
+Again, I expect this to go up, but I'm always keeping my on the overall file size and the goal is to keep everything down. 
+I highly doubt it will ever reach 100kb. For reference, Twitter Bootstrap 3 is 121kb minified. We are less than half in 
+size and I'd love to keep it that way.
+
+The JavaScript is nowhere near complete yet, so who knows...But Feather does not rely on jQuery.
+
 ## Design Process
 
 The other motivation for this little project is to have a better design process. Wireframes and more comprehensive layouts 

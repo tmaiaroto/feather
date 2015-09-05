@@ -55,20 +55,20 @@
 
 
 // seem to work for larger sizes at least
-// $bodytype: (
-//   font-family: 'Lora, sans-serif',
-//   regular: 400,
-//   bold: 700,
-//   italic: italic,
-//   cap-height: 0.7 // 0.7 seems to fit too
-// );
+$bodytype: (
+  font-family: 'Lora, sans-serif',
+  regular: 400,
+  bold: 700,
+  italic: italic,
+  cap-height: 0.7 // 0.7 seems to fit too
+);
 
-// $headingtype: (
-//   font-family: 'Open Sans Condensed, sans-serif',
-//   regular: 400,
-//   bold: 700,
-//   cap-height: 0.78 // 0.78 seems to fit
-// );
+$headingtype: (
+  font-family: 'Open Sans Condensed, sans-serif',
+  regular: 400,
+  bold: 700,
+  cap-height: 0.78 // 0.78 seems to fit
+);
 
 // $monospacetype: (
 //   font-family: 'Menlo, monospace',

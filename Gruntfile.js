@@ -50,6 +50,11 @@ module.exports = function(grunt) {
 					".build/dev/typography.css": "src/sass/typography.scss",
 					".build/dev/reset.css": "src/sass/reset.scss"
 				}
+			},
+			font: {
+				files: {
+					".build/dist/typography-kit.css": "src/sass/typography.scss",
+				}
 			}
 		},
 		less: {
@@ -78,6 +83,10 @@ module.exports = function(grunt) {
 				src: [".build/dev/reset.css",".build/dev/typography.css",".build/dev/style.css"],
 				dest: "dev/feather.css"
 			},
+			font: {
+				src: [".build/dist/typography-kit.css"],
+				dest: "dist/typography-kit.css"
+			}
 		},
 		cssmin: {
 			// options: {
@@ -88,7 +97,7 @@ module.exports = function(grunt) {
 				files: [{
 					expand: true,
 					cwd: 'dist',
-					src: ['feather.css', '!*.min.css'],
+					src: ['feather.css', 'typography-kit.css', '!*.min.css'],
 					dest: 'dist',
 					ext: '.min.css'
 				}]
@@ -142,11 +151,22 @@ module.exports = function(grunt) {
 
 	grunt.registerTask('default', ['jshint']);
 	grunt.registerTask('test', ['jshint', 'karma:unit']);
-	// there will be JS eventually
-	//grunt.registerTask('build', ['browserify:dist','browserify:dev','uglify']);
-	grunt.registerTask('build', ['sass:dist', 'less:dist', 'concat_css:dist', 'cssmin']);
 
+	// Builds feather.js, feather.min.js, feather.css, and feather.min.css.
+	grunt.registerTask('build', ['browserify:dist', 'uglify', 'sass:dist', 'less:dist', 'concat_css:dist', 'cssmin']);
+
+	// Builds the files in `src` into `dev` and starts a little web server with live reload for you to work on modifying Feather.
+	// See `dev/index.html` for a demo/playground.
 	grunt.registerTask('dev', ['browserify:dev', 'sass:dev', 'less:dev', 'concat_css:dev', 'express', 'open:devserver', 'watch']);
+
+	// Modular typefaces or "typography kits" that are easy to share.
+	// 
+	// Builds CSS for new typeface settings only - tweak `fonts.scss`, `scale.scss` and then run this. Add the CSS after `feather.css`
+	// on your pages. It will increase the total CSS size on your page and page load time, but it's non-destructive.
+	// Alternatively, you can run `build` and build in your fonts to feather.css directly.
+	// This task will leave you with a `typography-kit.css` in the `dist` directory. Aabout 11kb minified.
+	// That plus any actual web fonts you bring should be a small price to pay for beautiful type.
+	grunt.registerTask('build-font', ['sass:font', 'concat_css:font', 'cssmin']);
 
 	// TODO: registerTask for building themes. Just launches the dev site in a sense -- 
 	// but also includes a theme directory in the Node.js web server and puts new CSS/JS assets in the HTML too.
