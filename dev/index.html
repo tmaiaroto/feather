@@ -1,0 +1,250 @@
+<html>
+	<head>
+		<link href='https://fonts.googleapis.com/css?family=Raleway:400,100,700,900,200,300,500,600,800' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+
+		<!-- Ovo and Muli pairing -->
+		<link href='https://fonts.googleapis.com/css?family=Ovo' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Muli:400,300,300italic,400italic' rel='stylesheet' type='text/css'>
+
+		<!-- Open Sans Condensed and Lora pairing -->
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Lora:400,700' rel='stylesheet' type='text/css'>
+
+
+		<link rel="stylesheet" href="feather.css">
+		<!-- custom css for this page, not a part of Feather framework -->
+		<link rel="stylesheet" href="site.css">
+
+		<script src="js/feather.js"></script>
+		<script src="baseline.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+		<script type="text/javascript">
+		// TODO: Move to and make feather.js
+		// 14.706rem = 250px for some reason that means the root font size is 17px but that doesn't make sense. it seems to be 19.999
+		// Maybe it's the 2rem spacing.
+		// So maybe it's the px2rem calculation at 19.999 base size which = 12.5rem + 2rem = 14.5rem ... which still isn't perfect.
+		// That makes 246.5px not 250 even. We do need to round up to the next baseline though. Will this always be close enough??
+		// 
+
+		// This doesn't require jQuery to work. It must be explicitly applied like: onload="sizeInRem(this)" for example.
+		// px2rem from: http://dysprosiumlabs.com/px2rem/
+		function sizeInRem(elem) {}
+		function sizeInRem2(elem, setMargin) {
+			return;
+			var baseFontSize = Number(getComputedStyle(document.getElementsByTagName('body')[0]).fontSize.match(/(\d*(\.\d*)?)px/)[1]);
+			var size = elem.offsetHeight;
+			setMargin = (setMargin === undefined) ? false:setMargin;
+
+			// If it fits within the baseline, don't resize it.
+			if(size < baseFontSize || isNaN(size)) {
+				return;
+			}
+			console.log("ELEM SIZE: " + size);
+
+			// base font size is 20px
+			console.log("BASE: " + baseFontSize);
+			// so i made it harder than it had to be
+			// see the basefont size? it's the space between the baselines.
+			// so divide object height by that and get relative ems
+			
+			baseFontSize = 17;
+
+			// base line-height is 34px // so half the line-height eh? ^^  NOT font size. which was close, right? 17 vs 20. so it would have rounded fine to the rem. but wasn't correct.
+			// using the 17, i got the exact height when using the unrounded rem.
+			// maybe we add padding to the bottom ... or margin to the bottom. then we dont need to shrink images... though having them flush is nice.
+			// maybe make it optional based on the class.
+			
+			var remSize = Number(size) / Number(baseFontSize);
+			console.log("REM SIZE (unrounded): " + remSize);
+			if(isNaN(remSize)) {
+				return;
+			}
+			// get the difference... 
+			var difference = Math.round(remSize) - remSize;
+
+			remSize = Math.round(remSize);
+			console.log("REM SIZE: " + remSize);
+
+			// Can't make it zero height of course. This shouldn't really be either. It should have returned by now if that were the case.
+			if(remSize < 1) {
+				remSize = 1;
+			}
+			// so lets add margin. this way we aren't screwing with the contents of the div and such.
+			var currentAttrs = elem.getAttribute("style");
+			var missingSemiColon = "";
+			if(currentAttrs[currentAttrs.length] != ";" && currentAttrs.length > 0) {
+				missingSemiColon = ";";
+			}
+			
+			if(setMargin) {
+				console.log('set margin');
+				//currentAttrs += missingSemiColon + "margin-bottom:" + remSize + "rem;";
+				//elem.setAttribute("style",currentAttrs);
+				elem.style.marginBottom=difference+"rem"; // might be all we need. maybe dont need to set style explicitly.
+			} else {
+				console.log('set height');
+				elem.style.height=remSize+"rem";
+			}
+
+			// if(size >  2) {
+			// 	// return Number((Math.round(1000 / baseFontSize * size) / 1000).toFixed(3)) + "rem"
+			// 	// Why + 2, I'm still not sure. Seems to work though.
+			// 	// Sassline states: "The height of the baseline grid is then effectively set at 2rem, with increments at each 1rem."
+			// 	// So I think it has to do with that, but that doesn't really make sense. Who cares what the height of the grid is.
+			// 	// px to em and round to whole number should work. I can make any size so long as its a whole number rem unit and it fits to grid.
+			// 	// This can size things up OR down by the way. Slightly stretching images...But not by a terrible amount because a baseline isn't that much.
+			// 	// It's not even the closest either though. This isn't the correct math.
+			// 	var remSize = Math.round(Number((Math.round(1000 / baseFontSize * size) / 1000).toFixed(3)) + 2);
+			// 	if(remSize < 1) {
+			// 		// Return back in pixels if less than 1rem. The element can be sized in pixels and not break anything because it fits within the line.
+			// 		// Unless there's weird margins and such.
+			// 		// TODO: Account for margins. Size margins.
+			// 		return;
+			// 	}
+			// 	//elem.setAttribute("style","height:" + remSize + "rem;");
+			// 	var currentAttrs = elem.getAttribute("style");
+			// 	currentAttrs += ";" + remSize + "rem;";
+			// 	elem.setAttribute("style",currentAttrs);
+			// 	elem.style.height=remSize+"rem";
+			// }
+		}
+
+		// TODO: Or if a certain class if applied...
+		
+
+		</script>
+	</head>
+	<body class="typeset show-grid" id="baseline">
+		<div id="main">
+			<h1>Feather</h1>
+			<p>
+				Feather is a CSS design framework. It focuses on typography, responsive layouts, and page load speed. It is a mashup of a few other frameworks and tools out there. 
+				It can be combined with other CSS tools such as Font Awesome and Google Material Design Light (mdl).
+			</p>
+
+			<h2>Test some type Here For Sizing BASELINE</h2>
+			<p>
+			You think water moves fast? You should see ice. It moves like it has a mind. Like it knows it killed the world once and got a taste for murder. After the avalanche, it took us a week to climb out. Now, I don't know exactly when we turned on each other, but I know that seven of us survived the slide... and only five made it out. Now we took an oath, that I'm breaking now. We said we'd say it was the snow that killed the other two, but it wasn't. Nature is lethal but it doesn't hold a candle to man.
+
+			Normally, both your asses would be dead as fucking fried chicken, but you happen to pull this shit while I'm in a transitional period so I don't wanna kill you, I wanna help you. But I can't give you this case, it don't belong to me. Besides, I've already been through too much shit this morning over this case to hand it over to your dumb ass.
+
+			Now that we know who you are, I know who I am. I'm not a mistake! It all makes sense! In a comic, you know how you can tell who the arch-villain's going to be? He's the exact opposite of the hero. And most times they're friends, like you and me! I should've known way back when... You know why, David? Because of the kids. They called me Mr Glass.
+			</p>
+
+			<h4>H4 Heading</h4>
+			<p>
+				More paragraph copy. Now that we know who you are, I know who I am. I'm not a mistake! It all makes sense! In a comic, you know how you can tell who the arch-villain's going to be? He's the exact opposite of the hero. And most times they're friends, like you and me! I should've known way back when... You know why, David? Because of the kids. They called me Mr Glass.
+			</p>
+
+			<!-- NOTE: Font weights CHANGE THE CAP HEIGHT - you will likely break the baseline if you use them.
+			<h6><span class="f-normal">Font Weights</span> <small class="f-thin">(if you use a font that supports all of them)</small><br />
+				<span class="f-hairline">harline</span><br />
+				<span class="f-thin">thin</span><br />
+				<span class="f-light">light</span><br />
+				<span class="f-normal">normal</span><br />
+				<span class="f-medium">medium</span><br />
+				<span class="f-semibold">semibold</span><br />
+				<span class="f-bold">bold</span><br />
+				<span class="f-heavy">heavy</span><br />
+				<span class="f-black">black</span><br />
+			</h6>
+			-->
+
+
+			<!--<div style="width: 800px; margin: auto;" class="demos">
+				<ul class="blocks-2">
+					<li>Blocks 50%</li>
+					<li>Blocks 50%</li>
+				</ul>
+			</div>-->
+
+			<div class="units-row pg-t-3 pg-b-1" id="testdiv" style="background:#2E334A;">
+				<div class="unit-50 unit-centered">
+					<h1 style="color:#8EC9D2" class="upper">The Fox & the Grapes</h1>
+					<p style="color:#B7B8BF"><img src="nts_had_79_1_1_large.jpg" onload="sizeInRem(this);" style="height: 200px; float: left; margin: 0 1rem 0rem 0;" />A hungry Fox saw some fine bunches of Grapes hanging from a vine that was trained along a high trellis, and did his best to reach them by jumping as high as he could into the air. But it was all in vain, for they were just out of reach: so he gave up trying, and walked away with an air of dignity and unconcern, remarking, “I thought those Grapes were ripe, but I see now they are quite sour.”</p>
+
+					<p class="fine-print" style="color:#fff">(from http://femmebot.github.io/google-type/)</p>
+				</div>
+			</div>
+
+			<div  class="units-row">
+				<h2>Voluptates mollitia quod tempore laboris&nbsp;commodi</h2>
+				<p><strong>WOW</strong>, I've been doing it wrong all this time. <small>small text should be an inline element.</small> So wrap &lt;small&gt; with &lt;p&gt;. I always used it as its own block element...Well, not always but sometimes.</p>
+				<img style="display: block;  height: 250px;" id="the-image" src="unicorn.jpg" />
+
+				<p class="caption">Caption</p>
+				<p>
+				<span class="fine-print">Always size your image heights in whole number rem units.</span> This way they will align to the baseline grid. Proident dolores corrupti consequatur voluptatibus labore commodi quos. <b>Incidunt mollitia</b> tempora assumenda laborum voluptate accusamus dolore optio incididunt. Maiores at duis consequatur corrupti consectetur, aliquam optio commodo accusamus distinctio, necessitatibus&nbsp;nostrum.</p>
+				<p class="mono-type">Optio, nesciunt, quo, fugiat, blanditiis at quas excepturi quae maiores vel corrupti voluptate cupiditate nemo! In, eius quidem harum quibusdam ratione non. Iste, deleniti, fugit, voluptas aperiam qui adipisci provident ab accusantium possimus eveniet voluptate&nbsp;consectetur!</p>
+			
+				<!--<p class="fine-print mono-type">But what about making an even smaller small? Block element of course. Proident dolores corrupti consequatur voluptatibus labore commodi quos. <b>Incidunt mollitia</b> tempora assumenda laborum voluptate accusamus dolore optio incididunt. Maiores at duis consequatur corrupti consectetur, aliquam optio commodo accusamus distinctio, necessitatibus&nbsp;nostrum.</p>-->
+			</div>
+
+			<div class="units-row">
+				<blockquote><p>Fuga rerum laboris officia cupidatat, excepteur aliquid ut quis facere, cumque harum optio dignissimos. Duis repellat tempore dolor blanditiis alias impedit officiis ut&nbsp;consectetur.</p></blockquote>
+
+				<pre><code>body {
+    color: blue;
+}</code></pre>
+			</div>
+
+			<div class="units-row show-mobile">
+				<div class="unit-100">
+					<p>Available Unit Classes (Grid Column %): unit-10, 20, 25, 33, 35, 40, 50, 60, 65, 66, 70, 75, 80, 90</p>
+				</div>
+			</div>
+
+			<div class="units-row units-padding flush-row" id="demo-grid">
+			    <div class="unit-33">
+			    	<p>Hello World!</p>
+			    </div>
+			    <div class="unit-33">
+			    	<p>This demo page helps with the development of Feather as well.</p>
+			    </div>
+			    <div class="unit-33 text-right">
+			    	<p>A Third.</p>
+			    </div>
+			</div>
+
+			<footer id="footer">
+				<nav class="navbar navbar-right">
+				<ul>
+					<li><a href="http://www.shift8creative.com">Shift8</a></li>
+					<li><a href="https://github.com/tmaiaroto/feather">Feather</a></li>
+				</ul>
+				</nav>
+				<p class="caption">© Shift8Creative 2015</p>
+			</footer>
+		</div>
+		
+		<script type="text/javascript">
+		var f = new Feather({autoBaseline:true});
+		$(document).ready(function(){
+
+			//   break-0: 0,     // 0px       Mobile first
+			//   break-1: 640,   // 640px   ~ Small tablet up
+			//   break-2: 800,   // 800px   ~ Large tablet up
+			//   break-3: 1024,  // 1024px  ~ Desktop up
+			//   break-4: 1600   // 1600px  ~ Large desktop up
+
+			// // Root font-sizes for each breakpoint. Set to half desired line-height of body text.
+			// // ! Make sure to have as many sizes as breakpoints above.
+			// $rootsizes: (
+			//   rootsize-0: 12,   // 24px line-height body text
+			//   rootsize-1: 14,   // 28px line-height body text
+			//   rootsize-2: 15,   // 30px line-height body text
+			//   rootsize-3: 17,   // 34px line-height body text
+			//   rootsize-4: 19    // 38px line-height body text
+
+			// {0:24, 640:28, 800:30, 1024:34, 1600:38}
+			//baseline('img', 34); // Apply a 24px baseline to all images on the page
+			//baseline('div', 34);
+			//baseline('.content img', 30); // Apply a 30px baseline to all images inside .content
+			//baseline('.content img', {0:24, 700:30}); // Apply a 24px baseline for all widths, 30px for widths above 700px
+
+		});
+		</script>
+	</body>
+</html>

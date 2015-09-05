@@ -1,0 +1,12 @@
+[submodule "vendors/kube"]
+	path = vendors/kube
+	url = https://github.com/imperavi/kube.git
+[submodule "vendors/ki.js"]
+	path = vendors/ki.js
+	url = https://github.com/dciccale/ki.js.git
+[submodule "vendors/sassline"]
+	path = vendors/sassline
+	url = https://github.com/designbyjake/sassline.git
+[submodule "vendors/minibus"]
+	path = vendors/minibus
+	url = https://github.com/axelpale/minibus.git

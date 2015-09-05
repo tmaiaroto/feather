@@ -1,0 +1,183 @@
+/** 
+ * Borrowed from Pure.css
+ * Two helpful helper classes.
+*/
+
+/**
+ * Always hide an element when it has the `hidden` HTML attribute.
+*/
+.hidden,
+[hidden] {
+    display: none !important;
+}
+
+/**
+ * Add this class to an image to make it fit within it's fluid parent wrapper while maintaining
+ * aspect ratio.
+*/
+.responsive-img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/**
+ *	Kube Framework 4
+ *	Well, just some of it. I've commented out the things not taken for reference.
+*/
+@import "../../vendors/kube/less/mixins.less";
+// @import "../../vendors/kube/less/variables.less";
+
+// Most notably, the overwritten variables.less file includes a @base-line: 1rem;
+// That's really the only requirement, but other things such as colors, etc. can be change to taste.
+@import "kube/variables.less";
+
+// Sassline is handling the reset and typography. Compiled Sassline CSS will be concatenated before Kube's.
+// @import "../../vendors/kube/less/reset.less";
+// @import "../../vendors/kube/less/typography.less";
+
+// @import "../../vendors/kube/less/grid.less";
+// We need a modified grid.less file because we don't want to add a bottom margin to the unit-rows.
+// Sadly, just one style setting forced us to copy the entire thing and redo it.
+// However, there may be additional adjustments here in the future.
+@import "kube/grid.less";
+// Kube's blocks is still ok.
+@import "../../vendors/kube/less/blocks.less";
+@import "../../vendors/kube/less/blocks-responsive.less";
+
+@import "../../vendors/kube/less/tables.less";
+@import "../../vendors/kube/less/forms.less";
+
+@import "../../vendors/kube/less/navigation.less";
+@import "../../vendors/kube/less/buttons.less";
+
+// Significantly less components
+@import "../../vendors/kube/less/progress.less";
+@import "../../vendors/kube/less/accordion.less";
+@import "../../vendors/kube/less/dropdown.less";
+@import "../../vendors/kube/less/modal.less";
+
+@import "../../vendors/kube/less/helpers.less";
+// Prettyprint seems unncessary
+
+@import "../../vendors/kube/less/grid-responsive.less";
+@import "../../vendors/kube/less/blocks-responsive.less";
+// No need for responsive-typography.less
+@import "../../vendors/kube/less/navigation-responsive.less";
+@import "../../vendors/kube/less/forms-responsive.less";
+
+@import "../../vendors/kube/less/print.less";
+
+
+/**
+ * Some of our own helper classes.
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+/**
+ * Hide/show for mobile devices. There's already .hide which hides everything.
+ * If you want to hide on desktop, just use, the opposite, .show-mobile class.
+*/
+@media only screen and (max-width: 767px) {
+	.hide-mobile {
+		display: none;
+	}
+}
+@media only screen and (min-width: 767px) {
+	.show-mobile {
+		display: none;
+	}
+}
+
+/**
+ * Flush grid rows. Applying .flush-row on a div containing .unit-* will change the
+ * first and last children to have no padding on the left/right sides. This provides 
+ * columns in the traditional sense - with "gutters" only.
+*/
+.flush-row [class*='unit-']:first-of-type {
+	padding-left: 0;
+}
+.flush-row [class*='unit-']:last-of-type {
+	padding-right: 0;
+}
+
+/**
+ * Font weights
+ * Prefixed with f- to not conflict with other styles, I felt "black" and "bold" would 
+ * be quite common to see.
+ * 
+ * Note: Not all fonts will support all of the weights.
+ */
+.f-hairline {
+	font-weight: 100 !important;
+}
+.f-thin {
+	font-weight: 200 !important;
+}
+.f-light {
+	font-weight: 300 !important;	
+}
+.f-normal {
+	font-weight: 400 !important;
+}
+.f-medium {
+	font-weight: 500 !important;
+}
+.f-semibold {
+	font-weight: 600 !important;
+}
+.f-bold {
+	font-weight: 700 !important;
+}
+.f-heavy {
+	font-weight: 800 !important;
+}
+.f-black {
+	font-weight: 900 !important;
+}
+
+/**
+ * Bottom margins can easily be applied to grid divs now. Keep in mind the baseline grid.
+ * Everything should be sized in whole number rem units when possible in order to ensure
+ * things align to the baseline grid.
+ * 
+ * Note: It's possible to size some elements in pixels and unavoidable. Things like small
+ * icons that fit within a line are just fine to be in pixels. Even if the baseline grid
+ * is broken, it's not the end of the world. The type is still sized and spaced well.
+ * It's going to depend on how meticulous you want to be =)
+*/
+.mg-b-1 {
+	margin-bottom: 1rem;
+}
+.mg-b-2 {
+	margin-bottom: 2rem;
+}
+.mg-b-3 {
+	margin-bottom: 3rem;
+}
+.mg-b-4 {
+	margin-bottom: 4rem;
+}
+.mg-b-5 {
+	margin-bottom: 5rem;
+}
+
+.pg-t-1 {
+	padding-top: 1rem;
+}
+.pg-t-2 {
+	padding-top: 2rem;
+}
+.pg-t-3 {
+	padding-top: 3rem;
+}
+.pg-b-1 {
+	padding-bottom: 1rem;
+}
+.pg-b-2 {
+	padding-bottom: 2rem;
+}
+.pg-b-3 {
+	padding-bottom: 3rem;
+}
+// TODO: top, left, right?

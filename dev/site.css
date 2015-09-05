@@ -1,0 +1,37 @@
+/* All of these styles are specific to the demo page - Feel free to borrow, but this is where we deviate away from the framework into custom design! */
+
+/* Yea, you want something centered on the page, you gotta do it yourself. Feather doesn't care how wide you want your stuff or if it's to be centered. */
+/* You choose these things. Don't let the framework choose for you. */
+#main {
+	margin: auto;
+	max-width: 1200px;
+    padding: 0 20px;
+    margin-bottom: 3.3em;
+    /*font-family: edita, serif;*/
+}
+
+/* You really don't want this in the framework - it's the baseline grid just for show. */
+#baseline.show-grid {
+  background-image: -webkit-linear-gradient(top, cyan 0, rgba(255,255,255,0) 1px);
+  background-image: -moz-linear-gradient(top, cyan 0, rgba(255,255,255,0) 1px);
+  background-image: -o-linear-gradient(top, cyan 0, rgba(255,255,255,0) 1px);
+  background-image: linear-gradient(to bottom, cyan 0, rgba(255,255,255,0) 1px);
+  background-repeat: repeat-y;
+  background-size: 100% 1rem;
+}
+
+.demo {
+	height: 6rem;
+}
+.demo li {
+	    text-align: center;
+    font-size: .85em;
+    background-color: #7e9ec7;
+    padding: 15px 0;
+    color: rgba(255,255,255,0.85);
+    line-height: 1;
+}
+
+#demo-grid div {
+	background: #C2DDFF;
+}

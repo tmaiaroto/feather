@@ -1,0 +1,77 @@
+// Override Sassline's fonts here in the main repo, not the submodule or the main style.scss which includes everything.
+// Basically, the desired font for heading, body, and monospace need to be set (along with desired weight/styles).
+// 
+// Then the cap-height. Which, according to: https://jakegiltsoff.co.uk/posts/sassline-v2-0
+// is basically a trial and error process. Use the dev site with the grid lines to do that. The cap-height will likely
+// be somewhere between 0.6 and 0.8 according to the documentation. Raleway for example ended up being 0.7 or so to sit 
+// on the line. 
+// 
+// NOTE: Ensure you have a bunch of copy on the page and scroll down. Being off by a little bit will be more apparent
+// over a longer stretch of copy because each line may be off a very tiny invisible amount (especially on a retina display).
+// 
+// My best advice here is to set the heading first. Ensure it didn't push the body copy off the baseline farther down the page.
+// Then set the body copy and check that. Another good tip is to put images on your page (sized in whole number rem units) by
+// themselves (block). Or empty div elements or really anything in rem units. This pushes things down the page a bit and the 
+// hard edge of a div or image is sometimes easier to see if its resting on the baseline or not than type.
+// 
+// 
+// Here are some local fonts cap-height sizes to get you started:
+// Georgia: 0.66, Times / Times New Roman: 0.65, Palatino: 0.52
+// Lucida Grande: 0.72, Helvetica: 0.65, Verdana: 0.76, Tahoma: 0.76
+// 
+// Selection of Typekit fonts cap-height sizes:
+// Proxima Nova: 0.57, Museo Slab: 0.66, JAF Facit: 0.7, Brandon Grotesque: 0.65, Clavo: 0.7, Adelle: 0.66, FF Tisa Pro: 0.82, Jubilat: 0.66, Futura PT: 0.66, Chaparral Pro: 0.5, Minion Pro: 0.66, Myriad Pro: 0.66, Adobe Caslon Pro: 0.36
+
+
+// So where to get fonts? Many places, Google Fonts is nice though. https://www.google.com/fonts
+// Choose some, put them on the dev/index.html page and start adjusting here. Grunt dev has a livereload
+// so it should be pretty fast to get it all set (careful of cache though).
+// 
+// Keep in mind there's helper classes for all font-weights but the font may not support all of the weights.
+// Even if it does, be aware that including every weight is going to increase the page size and affect the
+// overall download speed for your page.
+// 
+// Original/example/guide to follow:
+// $bodytype: (
+//   font-family: 'Georgia, serif',
+//   regular: 400,
+//   bold: 700,
+//   italic: italic,
+//   cap-height: 0.66
+// );
+
+// $headingtype: (
+//   font-family: 'Helvetica, sans-serif',
+//   regular: 400,
+//   bold: 700,
+//   cap-height: 0.65
+// );
+
+// $monospacetype: (
+//   font-family: 'Menlo, monospace',
+//   regular: 400,
+//   cap-height: 0.68
+// );
+
+
+// seem to work for larger sizes at least
+// $bodytype: (
+//   font-family: 'Lora, sans-serif',
+//   regular: 400,
+//   bold: 700,
+//   italic: italic,
+//   cap-height: 0.7 // 0.7 seems to fit too
+// );
+
+// $headingtype: (
+//   font-family: 'Open Sans Condensed, sans-serif',
+//   regular: 400,
+//   bold: 700,
+//   cap-height: 0.78 // 0.78 seems to fit
+// );
+
+// $monospacetype: (
+//   font-family: 'Menlo, monospace',
+//   regular: 400,
+//   cap-height: 0.6
+// );

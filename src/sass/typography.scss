@@ -1,0 +1,113 @@
+/* CSS compiled from SCSS */
+/* --------------------------------------- */
+
+// Sassline works with rems
+// Maybe https://github.com/chuckcarpenter/REM-unit-polyfill  might help older browsers?
+
+// Import Sassline base SCSS files in order so variables are read correctly.
+// Kube's reset has everything Sassline's does and a little more.
+// Reset will now go into reset.scss so that this file may exist for strictly setting type.
+// This works out to be about 15.1kb in size.
+// 
+// TODO: Try to slim that down by breaking out redundant styles...Though that means forking
+// Sassline I think.
+// 
+// Anyway, if a different "type pack" is compiled and taken from the `.build` directory 
+// directly, it can be minified and used along with some webfonts and added to the page.
+// This makes sharing different type easy. It's a separate piece from the framework.
+// TODO: Make grunt task that builds that separately even.
+// 
+// Yay! Share typesettings.
+// 
+// @import "../../vendors/sassline/assets/sass/base/reset";
+@import "../../vendors/sassline/assets/sass/base/variables";
+
+@import "../../vendors/sassline/assets/sass/base/modular-scale";
+
+// Adjust variables and scale here according to instructions: https://jakegiltsoff.co.uk/posts/sassline-v2-0
+// It will need to be done for each font-family and scale being used. Sad, but that's how baseline works in CSS.
+// In every tool or set of styles I've seen that achieves it (properly), it always must be adjusted based on the typeface.
+// Well, that's just like print.
+// 
+// TODO: ... adjustments... adjust the fony families and cap heights in _variables.scss
+// NOTE: May make a few builds with different fonts and scales ready to go. Just to save people from building.
+// Maybe even build a cute little desktop app to help this along and preview! with http://electron.atom.io/
+
+// fonts.scss is basically step 1 from this blog post: https://jakegiltsoff.co.uk/posts/sassline-v2-0
+// It overrides the $headingtype, $bodytype, and $monotype variables in variables.scss
+// TODO: command line tool to adjust this through a wizard...maybe write an app in Go or shell. 
+// But also it might be nice to automatically do this based on the typeface chosen. So I need to look up how to read and measure for cap-height.
+@import "sassline/fonts";
+@import "sassline/scale";
+
+// The rest of the Sassline stuff
+@import "../../vendors/sassline/assets/sass/base/mixins";
+@import "../../vendors/sassline/assets/sass/base/typography";
+// Layouts handled by Kube CSS.
+//@import "../../vendors/sassline/assets/sass/base/layouts";
+
+// Import all SCSS modules with Sass globbing (nothing here that we need, these were all for the demo page).
+// @import "../../vendors/sassline/assets/sass/modules/*.*";
+
+
+// A smaller size is desired. Sassline defines `iota` from the modular-scale, but never uses it.
+// Probably due to a limited number of block elements. So let's use it, even though it requires !important overrides =(
+.fine-print {
+    //font-family: unquote(map-get($headingtype, font-family));
+    font-style: normal;
+    font-weight: map-get($headingtype, regular);
+
+	// !important is needed because we're overwriting styles. i wish we had another block element here.
+	// all of the following is close!  the calculations are really close and are taken from _typography.scss ... but dont quite fit.
+	@include fontsize(iota, all);
+
+	$get-scale: map-get($modular-scale, scale-0);
+	$get-size: map-get($get-scale, iota);
+	$rootsize: nth($sizes, 1);
+
+	// cap-height: 0.65
+	// iota:    11.5 at scale-0
+	
+	// was 2, now 1.85 - this isn't really repeatable. it was a manual adjustment... or will it work across typefaces?? 
+	// it might. might be small enough for most faces to not throw things off the baseline.
+	$baseline-push: #{2 - (($get-size * ((1.85 * $rootsize / $get-size) - map-get($headingtype, cap-height))) / $rootsize + 0.00001)};
+	margin-bottom: #{$baseline-push}rem !important;
+
+	// was 1, now 1.1
+	$baseline-shift: #{($get-size / 2 * ((1.1 * $rootsize / $get-size) - 0.65)) / $rootsize + 0.00001};
+	padding-top: #{$baseline-shift}rem !important;
+
+	line-height: 1rem !important;
+}
+
+// Some helper classes. Sometimes it won't matter what the typeface is. It will still fit into the baseline grid.
+// However, if the $headingtype and $bodytype are drastically different in cap-height, then it will break the grid.
+// Most likely, it will not reach the baseline, but not throw off the next line with a different element.
+// For example, $bodytype default is 0.66 and $headingtype is 0.65 ... The different is super small, but $headingtype
+// won't touch the baseline because it is shorter. $monotype is 0.68 ... This is slightly larger, but this does
+// not break the baseline grid. Even changing that to 0.98 didn't seem to break the grid. 
+// Your milage will vary. It's not ideal, but it'll save time and filesize over creating padding and margin for each
+// possible combination.
+// 
+// Even Sassline's demo page has this tiny gap between toward the end paragraphs. The measurements just aren't perfect
+// on the web. Ever.
+// 
+// See Sassline's _variables.scss for sizes.
+.heading-type {
+	font-family: unquote(map-get($headingtype, font-family));
+}
+.body-type {
+	font-family: unquote(map-get($bodytype, font-family));
+}
+.mono-type {
+	font-family: unquote(map-get($monospacetype, font-family));	
+}
+
+// Images and other element need to be sized in rem units to align to the baseline grid and not throw everything off.
+// We don't get arbitrary sizes, we need to fit them so that means shrinking or stretching images (unless they so happen to be sized perfectly).
+// Regardless, we want them rem so they are responsive too. Browsers can choose the font size and they should scale, right?
+
+// Maybe
+// https://github.com/ggkovacs/node-px2rem 
+// or https://github.com/normanzb/size
+// 
